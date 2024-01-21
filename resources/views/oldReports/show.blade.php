@@ -5,115 +5,102 @@
             {{ __('Transactions') }}
         </h2>
         <div class="flex items-center justify-end mt-4">
+            <p class="px-4 py-1.5 bg-green-700 text-white shadow-sm sm:rounded-md  hover:text-white hover:bg-green-400">
+                @php
+                $balance = 0;
+                @endphp
+
+                @foreach($forBalance as $transaction)
+                @php
+                $balance += ($transaction->oldactype_id == 1) ? $transaction->amount : -($transaction->amount);
+                @endphp
+                @endforeach
+                {{ __('Current Balance: ') }} <strong>{{ $balance }}</strong>
+            </p>
             <a href="{{ route('oldTransactions.create') }}">
-                <x-primary-button class="ms-4 text-sm text-white-600 hover:text-green-400 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                <x-primary-button class="ms-4 text-sm text-white-600 bg-neutral-700 hover:text-green-400 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                     {{ __('Add New Transaction') }}
                 </x-primary-button>
             </a>
             <a href="{{ route('oldReports') }}">
-                <x-primary-button class="ms-4 text-sm text-white-600 hover:text-green-400 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                <x-primary-button class="ms-4 text-sm text-white-600 bg-neutral-700 hover:text-green-400 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                     {{ __('Trans Report') }}
                 </x-primary-button>
             </a>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    <!-- Table START -->
+    <div class="p-10">
+        <div class="mt-2 p-5 bg-neutral-700 rounded-lg text-white">
+            <!-- Table START -->
+            <table class="w-full min-w-min bg-center border-collapse border-b border-white">
+                <thead class="text-xs uppercase">
+                    <tr class="border-b border-solid border-0.5 border-white">
+                        <th class="border-b border-solid border-0.5 border-white">Post Date</th>
+                        <th class="border-b border-solid border-0.5 border-white">Vou. Date</th>
+                        <th class="border-b border-solid border-0.5 border-white">Trans. No</th>
+                        <th class="border-b border-solid border-0.5 border-white">A/C Name</th>
+                        <th class="border-b border-solid border-0.5 border-white">Details</th>
+                        <th class="border-b border-solid border-0.5 border-white">Debit (Tk)</th>
+                        <th class="border-b border-solid border-0.5 border-white">Credit (Tk)</th>
+                        <th class="border-b border-solid border-0.5 border-white">Balance (Tk)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @php
+                    $balance = 0;
+                    $totalDebit = 0;
+                    $totalCredit = 0;
+                    @endphp
 
-                    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                        <table class="w-full text-sm text-left rtl:text-right text-gray-500">
-                            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-                                <tr>
-                                    <th scope="col" class="px-6 py-3">
-                                        Post Date
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        Vou. Date
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        Trans. No
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        A/C Name
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        Details
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        Debit (Tk)
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        Credit (Tk)
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        Balance (Tk)
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @php
-                                    $balance = 0;
-                                    $totalDebit = 0;
-                                    $totalCredit = 0;
-                                @endphp
+                    @foreach($preTransactions as $preTransaction)
+                    @php
+                    $balance += ($preTransaction->oldactype_id == 1) ? $preTransaction->amount : 0;
+                    $balance -= ($preTransaction->oldactype_id == 2) ? $preTransaction->amount : 0;
+                    @endphp
+                    @endforeach
 
-                                @foreach($preTransactions as $preTransaction)
-                                    @php
-                                        $balance += ($preTransaction->oldactype_id == 1) ? $preTransaction->amount : 0;
-                                        $balance -= ($preTransaction->oldactype_id == 2) ? $preTransaction->amount : 0;
-                                    @endphp
-                                @endforeach
+                    @foreach($transactions as $transaction)
+                    @php
+                    $debitAmount = 0;
+                    $creditAmount = 0;
 
-                                @foreach($transactions as $transaction)
-                                    @php
-                                        $debitAmount = 0;
-                                        $creditAmount = 0;
-                                        
-                                        $debitAmount = ($transaction->oldactype_id == 1) ? $transaction->amount : 0;
-                                        $creditAmount = ($transaction->oldactype_id == 2) ? $transaction->amount : 0;
-                                        
-                                        $totalDebit += $debitAmount;
-                                        $totalCredit += $creditAmount;
-                                        $balance += $debitAmount - $creditAmount;
-                                    @endphp
+                    $debitAmount = ($transaction->oldactype_id == 1) ? $transaction->amount : 0;
+                    $creditAmount = ($transaction->oldactype_id == 2) ? $transaction->amount : 0;
 
-                                <tr class="bg-white border-b hover:bg-gray-50">
-                                    <td class="px-6 py-4 font-medium text-gray-500 whitespace-nowrap">
-                                        {{ $transaction->created_at->format('d-m-Y') }}
-                                    </td>
-                                    <td class="px-6 py-4 font-medium text-gray-500 whitespace-nowrap">
-                                        {{ \Carbon\Carbon::parse($transaction->voucher_at)->format('d-m-Y') }}
-                                    </td>
-                                    <td class="px-6 py-4 font-medium text-gray-500 whitespace-nowrap">
-                                        {{ $transaction->id }}
-                                    </td>
-                                    <td class="px-6 py-4 font-medium text-gray-500 whitespace-nowrap">
-                                        {{ $transaction->oldacname->name }}
-                                    </td>
-                                    <td class="px-6 py-4 font-medium text-gray-500 whitespace-nowrap">
-                                        <a href="#" class="font-medium text-blue-600 hover:underline">View</a>
-                                    </td>
-                                    <td class="px-6 py-4 font-medium text-gray-500 whitespace-nowrap">
-                                        {{ $debitAmount }}
-                                    </td>
-                                    <td class="px-6 py-4 font-medium text-gray-500 whitespace-nowrap">
-                                        {{ $creditAmount }}
-                                    </td>
-                                    <td class="px-6 py-4 font-medium text-gray-500 whitespace-nowrap">
-                                        {{ $balance }}
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <!-- Table END -->
-                </div>
-            </div>
+                    $totalDebit += $debitAmount;
+                    $totalCredit += $creditAmount;
+                    $balance += $debitAmount - $creditAmount;
+                    @endphp
+                    <tr>
+                        <td class="px-6 py-4 border-b border-solid border-0.5 border-white">
+                            {{ $transaction->created_at->format('d-m-Y') }}
+                        </td>
+                        <td class="px-6 py-4 border-b border-solid border-0.5 border-white">
+                            {{ \Carbon\Carbon::parse($transaction->voucher_at)->format('d-m-Y') }}
+                        </td>
+                        <td class="px-6 py-4 border-b border-solid border-0.5 border-white">
+                            {{ $transaction->id }}
+                        </td>
+                        <td class="px-6 py-4 border-b border-solid border-0.5 border-white">
+                            {{ $transaction->oldacname->name }}
+                        </td>
+                        <td class="px-6 py-4 border-b border-solid border-0.5 border-white">
+                            <a href="#">View</a>
+                        </td>
+                        <td class="px-6 py-4 border-b border-solid border-0.5 border-white text-right">
+                            {{ $debitAmount }}
+                        </td>
+                        <td class="px-6 py-4 border-b border-solid border-0.5 border-white text-right">
+                            {{ $creditAmount }}
+                        </td>
+                        <td class="px-6 py-4 border-b border-solid border-0.5 border-white text-right">
+                            {{ $balance }}
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            <!-- Table END -->
         </div>
     </div>
 </x-app-layout>

@@ -12,9 +12,10 @@ class OldTransactionController extends Controller
 {
     public function index()
     {
-        $transactions = OldTransaction::with('oldacName')->latest()->paginate(10);
+        $forBalance = OldTransaction::all();
+        $transactions = OldTransaction::with('oldacName')->latest()->paginate(25);
 
-        return view('oldTransactions.index', compact('transactions'));
+        return view('oldTransactions.index', compact('transactions', 'forBalance'));
     }
 
     public function create()
