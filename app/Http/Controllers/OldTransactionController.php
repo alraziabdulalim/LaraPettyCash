@@ -18,60 +18,38 @@ class OldTransactionController extends Controller
         return view('oldTransactions.index', compact('transactions', 'transCalcs'));
     }
 
-    public function create()
+    public function show(Request $request)
     {
         $transCalcs = OldTransaction::all();
 
-        $oldacNames = OldacName::all();
-        $oldacTypes = OldacType::all();
-        // $parentAcs = OldacName::whereBetween('id', [1, 7])->get();
-        $parentAcs = OldacName::where('parent_id', 0)->get();
-        return view('oldTransactions.create', compact('oldacNames', 'parentAcs', 'oldacTypes', 'transCalcs'));
-    }
-
-    public function store(Request $request)
-    {
         $this->validate($request, [
-            'voucher_at' => 'required',
-            'oldactype_id' => 'required',
-            'oldacname_id' => 'required',
-            'amount' => 'required',
-            'details' => 'required',
+            'startDate' => 'required',
+            'endDate' => 'required',
         ]);
 
-        $oldacname_id = $request->oldacname_id;
-        $Oldacnames = OldacName::firstWhere('id', $oldacname_id);
-        $oldactype_id = $Oldacnames->oldactype_id;
-        // timestamp remake
-        $voucher_date = $request->voucher_at;
-        $voucher_time = date('H:i:s');
+        $startDate = $request->startDate;
+        $endDate = $request->endDate;
+        $startTime = '00:00:01';
+        $endTime = '23:59:59';
+
         // Combine date and time strings
-        $voucherDateTimeString = $voucher_date . ' ' . $voucher_time;
-        // Create a DateTime object from the formatted string
-        $voucher_at = Carbon::parse($voucherDateTimeString);
+        $startDateTimeString = $startDate . ' ' . $startTime;
+        $endDateTimeString = $endDate . ' ' . $endTime;
 
-        $oldTransaction = OldTransaction::create([
-            'voucher_at' => $voucher_at,
-            'oldactype_id' => $oldactype_id,
-            'oldacname_id' => $request->oldacname_id,
-            'amount' => $request->amount,
-            'details' => $request->details,
-        ]);
-        // You can also flash the input data to be available for the next request
+        // DateTime object from the formatted string
+        $startDateTime = Carbon::parse($startDateTimeString);
+        $endDateTime = Carbon::parse($endDateTimeString);
+
+        $preTransactions = OldTransaction::where('created_at', '<', $startDateTime)
+            ->oldest()
+            ->get();
+
+        $transactions = OldTransaction::whereBetween('created_at', [$startDateTime, $endDateTime])
+            ->oldest()
+            ->get();
+
         $request->flash();
 
-        // Redirect back with the old input and an error message if validation fails
-        if ($oldTransaction) {
-            return redirect()->route('oldTransactions')->with('success', 'Transaction successfully');
-        } else {
-            return redirect()->back()->withInput()->withErrors(['error' => 'Failed to create transaction']);
-        }
+        return view('oldTransactions.show', compact('transCalcs', 'preTransactions', 'transactions'));
     }
-    
-    public function show(OldTransaction $transaction)
-    {
-        $transCalcs = OldTransaction::all();
-        return view('oldTransactions.show', compact('transCalcs', 'transaction'));
-    }
-    
 }

@@ -2,7 +2,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Transactions::Details') }}
+            {{ __('Transactions') }}
         </h2>
         <div class="flex items-center justify-end mt-4">
             <p class="px-4 py-1.5 bg-green-700 text-white shadow-sm sm:rounded-md  hover:text-white hover:bg-green-400">
@@ -17,17 +17,16 @@
                 @endforeach
                 {{ __('Current Balance: ') }} <strong>{{ $balance }}</strong>
             </p>
-            <a href="{{ route('oldVouchers.create') }}">
+            <a href="{{ route('oldTransactions.create') }}">
                 <x-primary-button class="ms-4 text-sm text-white-600 bg-neutral-700 hover:text-green-400 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    {{ __('Add New Voucher') }}
+                    {{ __('Add New Transaction') }}
                 </x-primary-button>
             </a>
-            <a href="{{ route('oldTransactions') }}">
+            <a href="{{ route('oldReports') }}">
                 <x-primary-button class="ms-4 text-sm text-white-600 bg-neutral-700 hover:text-green-400 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    {{ __('Trans Report') }}
+                    {{ __('All Report') }}
                 </x-primary-button>
             </a>
-        </div>
     </x-slot>
 
     <div class="p-10">

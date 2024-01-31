@@ -2,7 +2,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Old Transactions :: Form') }}
+            {{ __('Old Voucher :: Form') }}
         </h2>
         <div class="flex items-center justify-end mt-4">
             <p class="px-4 py-1.5 bg-green-700 text-white shadow-sm sm:rounded-md  hover:text-white hover:bg-green-400">
@@ -17,9 +17,9 @@
                 @endforeach
                 {{ __('Current Balance: ') }} <strong>{{ $balance }}</strong>
             </p>
-            <a href="{{ route('oldTransactions') }}">
+            <a href="{{ route('oldVouchers') }}">
                 <x-primary-button class="ms-4 text-sm text-white-600 bg-neutral-700 hover:text-green-400 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    {{ __('Show Last Transaction') }}
+                    {{ __('All Vouchers') }}
                 </x-primary-button>
             </a>
         </div>
@@ -29,7 +29,7 @@
         <div class="max-w-2xl mx-auto px-6 py-2 sm:px-2 lg:px-4">
             <!-- Transaction Form START -->
             <div class="p-5 bg-neutral-700 rounded-lg">
-                <form method="POST" action="{{ route('oldTransactions.store') }}">
+                <form method="POST" action="{{ route('oldVouchers.store') }}">
                     @csrf
 
                     <!-- Transaction Date -->

@@ -17,9 +17,9 @@
                 @endforeach
                 {{ __('Current Balance: ') }} <strong>{{ $balance }}</strong>
             </p>
-            <a href="{{ route('oldTransactions.create') }}">
+            <a href="{{ route('oldVouchers.create') }}">
                 <x-primary-button class="ms-4 text-sm text-white-600 bg-neutral-700 hover:text-green-400 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    {{ __('Add New Transaction') }}
+                    {{ __('Add New Voucher') }}
                 </x-primary-button>
             </a>
             <a href="{{ route('oldReports') }}">
@@ -53,6 +53,7 @@
                         <!-- Accounts Name -->
                         <div class="ml-4">
                             <select id="oldacname_id" name="oldacname_id" class="block mt-1 w-full rounded-lg">
+                                <option value="">Select AC Name</option>
                                 @foreach($oldacNames as $oldacName)
                                 <option value="{{$oldacName->id}}">{{ $oldacName->s_name }}</option>
                                 @endforeach
@@ -87,17 +88,6 @@
                     </thead>
                     <tbody>
                         @foreach($transactions as $transaction)
-                        @php
-                        $debitAmount = 0;
-                        $creditAmount = 0;
-                        @endphp
-
-                        <!-- Transaction type check and set to debit-credit -->
-                        @if($transaction->oldactype_id == 1)
-                        @php $debitAmount = $transaction->amount; @endphp
-                        @elseif($transaction->oldactype_id == 2)
-                        @php $creditAmount = $transaction->amount; @endphp
-                        @endif
                         <tr>
                             <td class="px-6 py-4 border-b border-solid border-0.5 border-white">
                                 {{ $transaction->created_at->format('d-m-Y') }}
@@ -115,10 +105,10 @@
                                 <a href="{{ route('oldTransactions.show', ['transaction' => $transaction->id]) }}">View</a>
                             </td>
                             <td class="px-6 py-4 border-b border-solid border-0.5 border-white text-right">
-                                {{ $debitAmount }}
+                                {{ ($transaction->oldactype_id == 1) ? $transaction->amount : 0 }}
                             </td>
                             <td class="px-6 py-4 border-b border-solid border-0.5 border-white text-right">
-                                {{ $creditAmount }}
+                                {{ ($transaction->oldactype_id == 2) ? $transaction->amount : 0 }}
                             </td>
                         </tr>
                         @endforeach

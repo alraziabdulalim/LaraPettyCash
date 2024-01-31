@@ -13,7 +13,7 @@ class OldReportController extends Controller
     {
         $oldacNames = OldacName::all();
         $transCalcs = OldTransaction::all();
-        $transactions = OldTransaction::with('oldacName')->latest()->paginate(10);
+        $transactions = OldTransaction::with('oldacName')->latest()->paginate(25);
 
         return view('oldReports.index', compact('oldacNames', 'transactions', 'transCalcs'));
     }
@@ -25,10 +25,12 @@ class OldReportController extends Controller
         $this->validate($request, [
             'startDate' => 'required',
             'endDate' => 'required',
+            'oldacname_id' => 'required',
         ]);
 
         $startDate = $request->startDate;
         $endDate = $request->endDate;
+        $oldacname_id = $request->oldacname_id;
         $startTime = '00:00:01';
         $endTime = '23:59:59';
 
@@ -36,20 +38,18 @@ class OldReportController extends Controller
         $startDateTimeString = $startDate . ' ' . $startTime;
         $endDateTimeString = $endDate . ' ' . $endTime;
 
-        // Create a DateTime object from the formatted string
+        // DateTime object from the formatted string
         $startDateTime = Carbon::parse($startDateTimeString);
         $endDateTime = Carbon::parse($endDateTimeString);
 
-        $transactions = OldTransaction::whereBetween('created_at', [$startDateTime, $endDateTime])
+        $transactions = OldTransaction::where('oldacname_id', $oldacname_id)
+            ->whereBetween('created_at', [$startDateTime, $endDateTime])
             ->oldest()
             ->get();
 
-        $preTransactions = OldTransaction::where('created_at', '<', $startDateTime)
-            ->oldest()
-            ->get();
 
         $request->flash();
 
-        return view('oldReports.show', compact('transCalcs', 'transactions', 'preTransactions'));
+        return view('oldReports.show', compact('transCalcs', 'transactions'));
     }
 }

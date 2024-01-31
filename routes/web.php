@@ -3,6 +3,7 @@
 use App\Http\Controllers\DataTestController;
 use App\Http\Controllers\OldReportController;
 use App\Http\Controllers\OldTransactionController;
+use App\Http\Controllers\OldVoucherController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
@@ -32,14 +33,18 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+// Old Voucher
+Route::get('/oldVouchers', [OldVoucherController::class, 'index'])->name('oldVouchers');
+Route::get('/oldVouchers/create', [OldVoucherController::class, 'create'])->name('oldVouchers.create');
+Route::post('/oldVouchers', [OldVoucherController::class, 'store'])->name('oldVouchers.store');
+Route::get('/oldVouchers/{transaction}/edit', [OldVoucherController::class, 'edit'])->name('oldVouchers.edit');
+Route::patch('/oldVouchers/{transaction}/update', [OldVoucherController::class, 'update'])->name('oldVouchers.update');
+Route::delete('/oldVouchers/{transaction}', [OldVoucherController::class, 'destroy'])->name('oldVouchers.destroy');
+Route::get('/oldVouchers/{transaction}/show', [OldVoucherController::class, 'show'])->name('oldVouchers.show');
+
 // Old Transaction
 Route::get('/oldTransactions', [OldTransactionController::class, 'index'])->name('oldTransactions');
-Route::get('/oldTransactions/create', [OldTransactionController::class, 'create'])->name('oldTransactions.create');
-Route::post('/oldTransactions', [OldTransactionController::class, 'store'])->name('oldTransactions.store');
-Route::get('/oldTransactions/{transaction}/edit', [OldTransactionController::class, 'edit'])->name('oldTransactions.edit');
-Route::patch('/oldTransactions/{transaction}/update', [OldTransactionController::class, 'update'])->name('oldTransactions.update');
-Route::delete('/oldTransactions/{transaction}', [OldTransactionController::class, 'destroy'])->name('oldTransactions.destroy');
-Route::get('/oldTransactions/{transaction}/show', [OldTransactionController::class, 'show'])->name('oldTransactions.show');
+Route::get('/oldTransactions/show', [OldTransactionController::class, 'show'])->name('oldTransactions.show');
 
 
 // Old Reports
