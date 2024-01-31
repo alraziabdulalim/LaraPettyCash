@@ -10,9 +10,9 @@
                 $balance = 0;
                 @endphp
 
-                @foreach($forBalance as $transaction)
+                @foreach($transCalcs as $transCalc)
                 @php
-                $balance += ($transaction->oldactype_id == 1) ? $transaction->amount : -($transaction->amount);
+                $balance += ($transCalc->oldactype_id == 1) ? $transCalc->amount : -($transCalc->amount);
                 @endphp
                 @endforeach
                 {{ __('Current Balance: ') }} <strong>{{ $balance }}</strong>
@@ -85,7 +85,7 @@
                             {{ $transaction->oldacname->name }}
                         </td>
                         <td class="px-6 py-4 border-b border-solid border-0.5 border-white">
-                            <a href="#">View</a>
+                            <a href="{{ route('oldTransactions.show', ['transaction' => $transaction->id]) }}">View</a>
                         </td>
                         <td class="px-6 py-4 border-b border-solid border-0.5 border-white text-right">
                             {{ $debitAmount }}

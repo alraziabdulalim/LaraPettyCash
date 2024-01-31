@@ -12,15 +12,15 @@ class OldReportController extends Controller
     public function index()
     {
         $oldacNames = OldacName::all();
-        $forBalance = OldTransaction::all();
+        $transCalcs = OldTransaction::all();
         $transactions = OldTransaction::with('oldacName')->latest()->paginate(10);
 
-        return view('oldReports.index', compact('oldacNames', 'transactions', 'forBalance'));
+        return view('oldReports.index', compact('oldacNames', 'transactions', 'transCalcs'));
     }
 
     public function show(Request $request)
     {
-        $forBalance = OldTransaction::all();
+        $transCalcs = OldTransaction::all();
 
         $this->validate($request, [
             'startDate' => 'required',
@@ -50,6 +50,6 @@ class OldReportController extends Controller
 
         $request->flash();
 
-        return view('oldReports.show', compact('forBalance', 'transactions', 'preTransactions'));
+        return view('oldReports.show', compact('transCalcs', 'transactions', 'preTransactions'));
     }
 }

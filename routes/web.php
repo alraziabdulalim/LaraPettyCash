@@ -39,7 +39,8 @@ Route::post('/oldTransactions', [OldTransactionController::class, 'store'])->nam
 Route::get('/oldTransactions/{transaction}/edit', [OldTransactionController::class, 'edit'])->name('oldTransactions.edit');
 Route::patch('/oldTransactions/{transaction}/update', [OldTransactionController::class, 'update'])->name('oldTransactions.update');
 Route::delete('/oldTransactions/{transaction}', [OldTransactionController::class, 'destroy'])->name('oldTransactions.destroy');
-Route::get('/oldTransactions/show', [OldTransactionController::class, 'show'])->name('oldTransactions.show');
+Route::get('/oldTransactions/{transaction}/show', [OldTransactionController::class, 'show'])->name('oldTransactions.show');
+
 
 // Old Reports
 Route::get('/oldReports', [OldReportController::class, 'index'])->name('oldReports');

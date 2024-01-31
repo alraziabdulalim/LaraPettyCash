@@ -12,21 +12,21 @@ class OldTransactionController extends Controller
 {
     public function index()
     {
-        $forBalance = OldTransaction::all();
+        $transCalcs = OldTransaction::all();
         $transactions = OldTransaction::with('oldacName')->latest()->paginate(25);
 
-        return view('oldTransactions.index', compact('transactions', 'forBalance'));
+        return view('oldTransactions.index', compact('transactions', 'transCalcs'));
     }
 
     public function create()
     {
-        $transactions = OldTransaction::all();
+        $transCalcs = OldTransaction::all();
 
         $oldacNames = OldacName::all();
         $oldacTypes = OldacType::all();
         // $parentAcs = OldacName::whereBetween('id', [1, 7])->get();
         $parentAcs = OldacName::where('parent_id', 0)->get();
-        return view('oldTransactions.create', compact('oldacNames', 'parentAcs', 'oldacTypes', 'transactions'));
+        return view('oldTransactions.create', compact('oldacNames', 'parentAcs', 'oldacTypes', 'transCalcs'));
     }
 
     public function store(Request $request)
@@ -67,11 +67,11 @@ class OldTransactionController extends Controller
             return redirect()->back()->withInput()->withErrors(['error' => 'Failed to create transaction']);
         }
     }
-
-    public function show()
+    
+    public function show(OldTransaction $transaction)
     {
-        $transactions = OldTransaction::with('oldacName')->oldest()->paginate(10);
-
-        return view('oldTransactions.show', compact('transactions'));
+        $transCalcs = OldTransaction::all();
+        return view('oldTransactions.show', compact('transCalcs', 'transaction'));
     }
+    
 }

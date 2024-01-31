@@ -10,9 +10,9 @@
                 $balance = 0;
                 @endphp
 
-                @foreach($forBalance as $transaction)
+                @foreach($transCalcs as $transCalc)
                 @php
-                $balance += ($transaction->oldactype_id == 1) ? $transaction->amount : -($transaction->amount);
+                $balance += ($transCalc->oldactype_id == 1) ? $transCalc->amount : -($transCalc->amount);
                 @endphp
                 @endforeach
                 {{ __('Current Balance: ') }} <strong>{{ $balance }}</strong>
@@ -20,11 +20,6 @@
             <a href="{{ route('oldTransactions.create') }}">
                 <x-primary-button class="ms-4 text-sm text-white-600 bg-neutral-700 hover:text-green-400 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                     {{ __('Add New Transaction') }}
-                </x-primary-button>
-            </a>
-            <a href="{{ route('oldTransactions.show') }}">
-                <x-primary-button class="ms-4 text-sm text-white-600 bg-neutral-700 hover:text-green-400 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    {{ __('Trans Report') }}
                 </x-primary-button>
             </a>
         </div>
@@ -73,7 +68,8 @@
                                 {{ $transaction->oldacname->name }}
                             </td>
                             <td class="px-6 py-4 border-b border-solid border-0.5 border-white">
-                                <a href="#">View</a>
+                                <a href="{{ route('oldTransactions.show', ['transaction' => $transaction->id]) }}">View</a>
+
                             </td>
                             <td class="px-6 py-4 border-b border-solid border-0.5 border-white text-right">
                                 {{ $debitAmount }}

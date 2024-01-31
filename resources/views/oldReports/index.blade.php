@@ -10,9 +10,9 @@
                 $balance = 0;
                 @endphp
 
-                @foreach($forBalance as $transaction)
+                @foreach($transCalcs as $transCalc)
                 @php
-                $balance += ($transaction->oldactype_id == 1) ? $transaction->amount : -($transaction->amount);
+                $balance += ($transCalc->oldactype_id == 1) ? $transCalc->amount : -($transCalc->amount);
                 @endphp
                 @endforeach
                 {{ __('Current Balance: ') }} <strong>{{ $balance }}</strong>
@@ -62,9 +62,9 @@
 
                         <!-- Submit Button -->
                         <div class="ml-4 mt-1">
-                            <button type="submit" class="bg-white text-green-400 rounded-md items-center px-6 py-4 border border-transparent font-semibold text-xs uppercase tracking-widest  hover:text-white hover:bg-green-700 focus:bg-green-700 active:bg-green-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                            <button type="submit" class="bg-white text-green-700 rounded-md items-center px-6 py-3 border border-transparent font-semibold text-xs uppercase tracking-widest  hover:text-white hover:bg-green-700 focus:bg-green-700 active:bg-green-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
                                 {{ __('Show Report') }}
-                            <button>
+                                <button>
                         </div>
                     </div>
                 </form>
@@ -112,7 +112,7 @@
                                 {{ $transaction->oldacname->name }}
                             </td>
                             <td class="px-6 py-4 border-b border-solid border-0.5 border-white">
-                                <a href="#">View</a>
+                                <a href="{{ route('oldTransactions.show', ['transaction' => $transaction->id]) }}">View</a>
                             </td>
                             <td class="px-6 py-4 border-b border-solid border-0.5 border-white text-right">
                                 {{ $debitAmount }}
