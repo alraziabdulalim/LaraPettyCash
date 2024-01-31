@@ -5,7 +5,7 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
+                    <a href="{{ route('home') }}">
                         <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
                     </a>
                 </div>
@@ -13,9 +13,6 @@
                 <!-- Navigation Links -->
                 @auth
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
                     <x-nav-link :href="route('oldVouchers')" :active="request()->routeIs('oldVouchers')">
                         {{ __('Old Voucher') }}
                     </x-nav-link>
@@ -24,9 +21,6 @@
                     </x-nav-link>
                     <x-nav-link :href="route('oldReports')" :active="request()->routeIs('oldReports')">
                         {{ __('Old Report') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('dataTests')" :active="request()->routeIs('dataTests')">
-                        {{ __('Data Test') }}
                     </x-nav-link>
                 </div>
                 @endauth
@@ -94,8 +88,8 @@
     @auth
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
+            <x-responsive-nav-link :href="route('home')" :active="request()->routeIs('home')">
+                {{ __('Home') }}
             </x-responsive-nav-link>
         </div>
 
