@@ -73,20 +73,20 @@
                     $balance += $debitAmount - $creditAmount;
                     @endphp
                     <tr>
-                        <td class="px-6 py-4 border-b border-solid border-0.5 border-white">
+                        <td class="px-6 py-4 border-b border-solid border-0.5 border-white text-nowrap">
                             {{ $transaction->created_at->format('d-m-Y') }}
                         </td>
-                        <td class="px-6 py-4 border-b border-solid border-0.5 border-white">
+                        <td class="px-6 py-4 border-b border-solid border-0.5 border-white text-nowrap">
                             {{ \Carbon\Carbon::parse($transaction->voucher_at)->format('d-m-Y') }}
                         </td>
                         <td class="px-6 py-4 border-b border-solid border-0.5 border-white">
-                            {{ $transaction->id }}
+                            <a href="{{ route('oldVouchers.show', ['transaction' => $transaction->id]) }}">{{ $transaction->id }}</a>
                         </td>
                         <td class="px-6 py-4 border-b border-solid border-0.5 border-white">
                             {{ $transaction->oldacname->name }}
                         </td>
-                        <td class="px-6 py-4 border-b border-solid border-0.5 border-white">
-                            <a href="{{ route('oldVouchers.show', ['transaction' => $transaction->id]) }}">View</a>
+                        <td class="px-6 py-4 border-b border-solid border-0.5 border-white text-sm">
+                            {{ $transaction->details }}
                         </td>
                         <td class="px-6 py-4 border-b border-solid border-0.5 border-white text-right">
                             {{ $debitAmount }}
