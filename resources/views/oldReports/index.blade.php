@@ -102,7 +102,7 @@
                                 {{ $transaction->oldacname->name }}
                             </td>
                             <td class="px-6 py-4 border-b border-solid border-0.5 border-white">
-                                <a href="{{ route('oldTransactions.show', ['transaction' => $transaction->id]) }}">View</a>
+                                <a href="{{ route('oldVouchers.show', ['transaction' => $transaction->id]) }}">View</a>
                             </td>
                             <td class="px-6 py-4 border-b border-solid border-0.5 border-white text-right">
                                 {{ ($transaction->oldactype_id == 1) ? $transaction->amount : 0 }}

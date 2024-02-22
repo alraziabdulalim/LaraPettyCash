@@ -55,7 +55,7 @@
                         <x-input-label for="parent_id" :value="__('Top Accounts Name')" class="text-white whitespace-nowrap" />
                         <select id="parent_id" name="parent_id" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
                             @foreach($parentAcs as $parentAc)
-                            <option value="{{$parentAc->id}}">{{ $parentAc->name }}</option>
+                            <option value="{{$parentAc->id}}">{{ $parentAc->id }}{{ $parentAc->name }}</option>
                             @endforeach
                         </select>
                         <x-input-error :messages="$errors->get('parent_id')" class="mt-2" />
@@ -66,7 +66,7 @@
                         <x-input-label for="oldacname_id" :value="__('Accounts Name')" class="text-white whitespace-nowrap" />
                         <select id="oldacname_id" name="oldacname_id" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
                             @foreach($oldacNames as $oldacName)
-                            <option value="{{$oldacName->id}}">{{ $oldacName->s_name }}</option>
+                            <option value="{{$oldacName->id}}">{{ $oldacName->id }}{{ $oldacName->s_name }}</option>
                             @endforeach
                         </select>
                         <x-input-error :messages="$errors->get('oldacname_id')" class="mt-2" />
