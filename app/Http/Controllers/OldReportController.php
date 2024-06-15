@@ -20,6 +20,7 @@ class OldReportController extends Controller
 
     public function show(Request $request)
     {
+        $oldacNames = OldacName::all();
         $transCalcs = OldTransaction::all();
 
         $this->validate($request, [
@@ -50,6 +51,6 @@ class OldReportController extends Controller
 
         $request->flash();
 
-        return view('oldReports.show', compact('transCalcs', 'transactions'));
+        return view('oldReports.show', compact('oldacNames', 'transCalcs', 'transactions'));
     }
 }

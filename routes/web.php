@@ -27,26 +27,25 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // Old Voucher
+    Route::get('/oldVouchers', [OldVoucherController::class, 'index'])->name('oldVouchers');
+    Route::get('/oldVouchers/create', [OldVoucherController::class, 'create'])->name('oldVouchers.create');
+    Route::post('/oldVouchers', [OldVoucherController::class, 'store'])->name('oldVouchers.store');
+    Route::get('/oldVouchers/{transaction}/edit', [OldVoucherController::class, 'edit'])->name('oldVouchers.edit');
+    Route::patch('/oldVouchers/{transaction}/update', [OldVoucherController::class, 'update'])->name('oldVouchers.update');
+    Route::delete('/oldVouchers/{transaction}', [OldVoucherController::class, 'destroy'])->name('oldVouchers.destroy');
+    Route::get('/oldVouchers/{transaction}/show', [OldVoucherController::class, 'show'])->name('oldVouchers.show');
+    
+    // Old Transaction
+    Route::get('/oldTransactions', [OldTransactionController::class, 'index'])->name('oldTransactions');
+    Route::get('/oldTransactions/show', [OldTransactionController::class, 'show'])->name('oldTransactions.show');
+        
+    // Old Reports
+    Route::get('/oldReports', [OldReportController::class, 'index'])->name('oldReports');
+    Route::get('/oldReports/show', [OldReportController::class, 'show'])->name('oldReports.show');
+    
+    Route::get('/dataTests', [DataTestController::class, 'index'])->name('dataTests');
 });
-
-// Old Voucher
-Route::get('/oldVouchers', [OldVoucherController::class, 'index'])->middleware(['auth', 'verified'])->name('oldVouchers');
-Route::get('/oldVouchers/create', [OldVoucherController::class, 'create'])->middleware(['auth', 'verified'])->name('oldVouchers.create');
-Route::post('/oldVouchers', [OldVoucherController::class, 'store'])->middleware(['auth', 'verified'])->name('oldVouchers.store');
-Route::get('/oldVouchers/{transaction}/edit', [OldVoucherController::class, 'edit'])->middleware(['auth', 'verified'])->name('oldVouchers.edit');
-Route::patch('/oldVouchers/{transaction}/update', [OldVoucherController::class, 'update'])->middleware(['auth', 'verified'])->name('oldVouchers.update');
-Route::delete('/oldVouchers/{transaction}', [OldVoucherController::class, 'destroy'])->middleware(['auth', 'verified'])->name('oldVouchers.destroy');
-Route::get('/oldVouchers/{transaction}/show', [OldVoucherController::class, 'show'])->middleware(['auth', 'verified'])->name('oldVouchers.show');
-
-// Old Transaction
-Route::get('/oldTransactions', [OldTransactionController::class, 'index'])->middleware(['auth', 'verified'])->name('oldTransactions');
-Route::get('/oldTransactions/show', [OldTransactionController::class, 'show'])->middleware(['auth', 'verified'])->name('oldTransactions.show');
-
-
-// Old Reports
-Route::get('/oldReports', [OldReportController::class, 'index'])->middleware(['auth', 'verified'])->name('oldReports');
-Route::get('/oldReports/show', [OldReportController::class, 'show'])->middleware(['auth', 'verified'])->name('oldReports.show');
-
-Route::get('/dataTests', [DataTestController::class, 'index'])->middleware(['auth', 'verified'])->name('dataTests');
 
 require __DIR__.'/auth.php';

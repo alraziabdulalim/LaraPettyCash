@@ -57,17 +57,62 @@ class OldVoucherController extends Controller
             'details' => $request->details,
         ]);
         $request->flash();
-        
+
         if ($oldTransaction) {
             return redirect()->route('oldVouchers')->with('success', 'Transaction successfully');
         } else {
             return redirect()->back()->withInput()->withErrors(['error' => 'Failed to create transaction']);
         }
     }
-    
+
     public function show(OldTransaction $transaction)
     {
         $transCalcs = OldTransaction::all();
         return view('oldVouchers.show', compact('transCalcs', 'transaction'));
+    }
+
+    public function edit(OldTransaction $transaction)
+    {
+        $transCalcs = OldTransaction::all();
+
+        $oldacNames = OldacName::all();
+        $oldacTypes = OldacType::all();
+        $parentAcs = OldacName::where('parent_id', 0)->get();
+        return view('oldVouchers.edit', compact('transCalcs', 'transaction', 'oldacNames', 'parentAcs', 'oldacTypes'));
+    }
+
+    public function update(Request $request, OldTransaction $transaction)
+    {
+        $this->validate($request, [
+            'voucher_at' => 'required',
+            'oldactype_id' => 'required',
+            'oldacname_id' => 'required',
+            'amount' => 'required',
+            'details' => 'required',
+        ]);
+
+        // timestamp remake
+        $voucher_date = $request->voucher_at;
+        $voucher_time = date('H:i:s');
+        // Combine date and time strings
+        $voucherDateTimeString = $voucher_date . ' ' . $voucher_time;
+        // DateTime object from the formatted string
+        $voucher_at = Carbon::parse($voucherDateTimeString);
+
+        // Update the attributes of the existing transaction
+        $transaction->voucher_at = $voucher_at;
+        $transaction->oldactype_id = $request->oldactype_id;
+        $transaction->oldacname_id = $request->oldacname_id;
+        $transaction->amount = $request->amount;
+        $transaction->details = $request->details;
+
+        // Save the changes
+        $updated = $transaction->save();
+
+        if ($updated) {
+            return redirect()->route('oldVouchers')->with('Updated', 'Transaction updated successfully');
+        } else {
+            return redirect()->back()->withInput()->withErrors(['error' => 'Failed to update transaction']);
+        }
     }
 }

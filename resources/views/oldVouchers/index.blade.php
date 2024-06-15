@@ -50,8 +50,9 @@
                             <td class="px-6 py-4 border-b border-solid border-0.5 border-white text-nowrap">
                                 {{ \Carbon\Carbon::parse($transaction->voucher_at)->format('d-m-Y') }}
                             </td>
-                            <td class="px-6 py-4 border-b border-solid border-0.5 border-white">                                
-                                <a href="{{ route('oldVouchers.show', ['transaction' => $transaction->id]) }}">{{ $transaction->id }}</a>
+                            <td class="px-6 py-4 border-b border-solid border-0.5 border-white">
+                                <a href="{{ route('oldVouchers.show', ['transaction' => $transaction->id]) }}">{{ $transaction->id }}</a> <br>
+                                <a href="{{ route('oldVouchers.edit', ['transaction' => $transaction->id]) }}">Edit</a>
                             </td>
                             <td class="px-6 py-4 border-b border-solid border-0.5 border-white">
                                 {{ $transaction->oldacname->name }}

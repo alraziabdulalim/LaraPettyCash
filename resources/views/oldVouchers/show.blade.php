@@ -36,7 +36,7 @@
             <div class="mt-2 p-5 bg-neutral-700 rounded-lg text-white">
                 <table class="w-full min-w-min bg-center border-collapse border-b border-white">
                     <tr class="border-b border-solid border-0.5 border-white">
-                        <th class="text-xl uppercase border-b border-solid border-0.5 border-white" colspan="2">Voucher Detail of  {{ $transaction->id }}</th>
+                        <th class="text-xl uppercase border-b border-solid border-0.5 border-white" colspan="2">Voucher Detail of {{ $transaction->id }}</th>
                     </tr>
                     <tr class="border-b border-solid border-0.5 border-white">
                         <th class="text-xs uppercase border-b border-solid border-0.5 border-white">A/C Name</th>
@@ -66,6 +66,12 @@
                         <th class="text-xs uppercase border-b border-solid border-0.5 border-white">Amount (Tk)</th>
                         <td class="px-6 py-4 border-b border-solid border-0.5 border-white">
                             {{ $transaction->amount }}
+                        </td>
+                    </tr>
+                    <tr class="border-b border-solid border-0.5 border-white">
+                        <th class="text-xs uppercase border-b border-solid border-0.5 border-white">Update need</th>
+                        <td class="px-6 py-4 border-b border-solid border-0.5 border-white">
+                            <a href="{{ route('oldVouchers.edit', ['transaction' => $transaction->id]) }}">Yes</a>
                         </td>
                     </tr>
                 </table>

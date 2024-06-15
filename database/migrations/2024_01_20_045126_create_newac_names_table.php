@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('newac_names', function (Blueprint $table) {
             $table->id();
+            $table->string('name', 50);
+            $table->string('s_name', 500);
+            $table->integer('parent_id');
+            $table->integer('oldactype_id');
             $table->timestamps();
         });
     }
