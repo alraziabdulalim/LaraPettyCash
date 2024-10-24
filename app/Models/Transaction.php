@@ -11,19 +11,24 @@ class Transaction extends Model
     use HasFactory;
 
     protected $fillable = [
-        // 'user_id',
-        'accountname_id',
+        'user_id',
+        'account_name_id',
+        'trans_type',
         'amount',
-        'detail',
+        'details',
+        'voucher_at',
     ];
 
     public function user():BelongsTo
     {
         return $this->belongsTo(User::class);
     }
-
-    public function accountname():BelongsTo
+    public function accountName ():BelongsTo
     {
         return $this->belongsTo(AccountName::class);
+    }
+    public function oldAccountName ():BelongsTo
+    {
+        return $this->belongsTo(OldAccountName::class);
     }
 }

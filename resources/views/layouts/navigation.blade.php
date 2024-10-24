@@ -13,14 +13,14 @@
                 <!-- Navigation Links -->
                 @auth
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('oldVouchers')" :active="request()->routeIs('oldVouchers')">
-                        {{ __('Old Voucher') }}
+                    <x-nav-link :href="route('vouchers')" :active="request()->routeIs('vouchers')">
+                        {{ __('Voucher') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('oldTransactions')" :active="request()->routeIs('oldTransactions')">
-                        {{ __('Old Transaction') }}
+                    <x-nav-link :href="route('transactions')" :active="request()->routeIs('transactions')">
+                        {{ __('Transaction') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('oldReports')" :active="request()->routeIs('oldReports')">
-                        {{ __('Old Report') }}
+                    <x-nav-link :href="route('reports')" :active="request()->routeIs('reports')">
+                        {{ __('Report') }}
                     </x-nav-link>
                 </div>
                 @endauth

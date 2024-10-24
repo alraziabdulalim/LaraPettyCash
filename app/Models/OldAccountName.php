@@ -2,21 +2,20 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class AccountName extends Model
+class OldAccountName extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'name',
-        'name_bn',
+        's_name',
         'parent_id',
         'trans_type',
-        'account_group',
     ];
 
     public function transactions(): HasMany
@@ -24,13 +23,13 @@ class AccountName extends Model
         return $this->hasMany(Transaction::class);
     }
 
-    public function topAccount(): BelongsTo
+    public function parent(): BelongsTo
     {
-        return $this->belongsTo(AccountName::class, 'parent_id');
+        return $this->belongsTo(OldAccountName::class, 'parent_id');
     }
 
-    public function downAccount(): HasMany
+    public function children(): HasMany
     {
-        return $this->hasMany(AccountName::class, 'parent_id');
+        return $this->hasMany(OldAccountName::class, 'parent_id');
     }
 }

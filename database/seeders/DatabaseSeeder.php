@@ -20,10 +20,13 @@ class DatabaseSeeder extends Seeder
             'name' => 'Abdul Alim',
             'email' => 'abdulalimpvt@gmail.com',
         ]);
-        
+
         User::factory()->create([
             'name' => 'Nadira Sultana',
             'email' => 'bd.nsmim@gmail.com',
         ]);
+
+        // $this->call(User::class);
+        // $this->call(AccountNameSeeder::class);
     }
 }

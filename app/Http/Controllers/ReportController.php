@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
+use App\Models\AccountName;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Helpers\VoucherHelper;
 use App\Helpers\TransactionHelper;
 
-class TransactionController extends Controller
+class ReportController extends Controller
 {
     protected $balance;
     protected $transactionHelper;
@@ -21,33 +23,36 @@ class TransactionController extends Controller
     public function index()
     {
         $balance = $this->balance;
+        $accountNames = AccountName::all();
         // $transactions = Transaction::with('accountName')->latest()->paginate(10);
         $transactions = Transaction::with('accountName')->orderBy('id', 'desc')->paginate(10);
 
-        return view('transactions.index', compact('balance', 'transactions'));
+        return view('reports.index', compact('balance', 'accountNames', 'transactions'));
     }
 
     public function show(Request $request)
     {
         $balance = $this->balance;
+        $accountNames = AccountName::all();
 
         $this->validate($request, [
             'startDate' => 'required|date',
             'endDate' => 'required|date|after_or_equal:startDate',
+            'account_name_id' => 'required',
         ]);
 
-        $startDate = $request->startDate;
-        $endDate = $request->endDate;
+        $startDate = $this->transactionHelper->getDateTime('startDate', $request->startDate);
+        $endDate = $this->transactionHelper->getDateTime('endDate', $request->endDate);
+        $accountNameId = $request->account_name_id;
 
-        $startDate = $this->transactionHelper->getDateTime('startDate', $startDate);
-        $endDate = $this->transactionHelper->getDateTime('endDate',  $endDate);
-
-        $preBalance = $this->transactionHelper->dateWiseBalance($startDate);
-        $transactions = $this->transactionHelper->getTransactions($startDate, $endDate);
+        $transactions = Transaction::where('account_name_id', $accountNameId)
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->oldest()
+            ->get();
 
         $request->flash();
 
-        return view('transactions.show', compact('balance', 'transactions', 'preBalance'));
-        // return view('transactions.show', array_merge(['balance' => $balance], $data));
+        return view('reports.show', compact('balance', 'accountNames', 'transactions'));
+        // return view('reports.show', array_merge(['balance' => $balance], ['balance' => $accountNames], $transactions));
     }
 }

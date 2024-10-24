@@ -1,12 +1,13 @@
 <?php
 
-use App\Http\Controllers\DataTestController;
-use App\Http\Controllers\OldReportController;
-use App\Http\Controllers\OldTransactionController;
-use App\Http\Controllers\OldVoucherController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ReportController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\VoucherController;
+use App\Http\Controllers\DataTestController;
+use App\Http\Controllers\AccountNameController;
+use App\Http\Controllers\TableUpdateController;
+use App\Http\Controllers\TransactionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,24 +29,24 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    // Old Voucher
-    Route::get('/oldVouchers', [OldVoucherController::class, 'index'])->name('oldVouchers');
-    Route::get('/oldVouchers/create', [OldVoucherController::class, 'create'])->name('oldVouchers.create');
-    Route::post('/oldVouchers', [OldVoucherController::class, 'store'])->name('oldVouchers.store');
-    Route::get('/oldVouchers/{transaction}/edit', [OldVoucherController::class, 'edit'])->name('oldVouchers.edit');
-    Route::patch('/oldVouchers/{transaction}/update', [OldVoucherController::class, 'update'])->name('oldVouchers.update');
-    Route::delete('/oldVouchers/{transaction}', [OldVoucherController::class, 'destroy'])->name('oldVouchers.destroy');
-    Route::get('/oldVouchers/{transaction}/show', [OldVoucherController::class, 'show'])->name('oldVouchers.show');
-    
-    // Old Transaction
-    Route::get('/oldTransactions', [OldTransactionController::class, 'index'])->name('oldTransactions');
-    Route::get('/oldTransactions/show', [OldTransactionController::class, 'show'])->name('oldTransactions.show');
-        
-    // Old Reports
-    Route::get('/oldReports', [OldReportController::class, 'index'])->name('oldReports');
-    Route::get('/oldReports/show', [OldReportController::class, 'show'])->name('oldReports.show');
-    
-    Route::get('/dataTests', [DataTestController::class, 'index'])->name('dataTests');
+    Route::resource('account-names', AccountNameController::class);
+
+    // Voucher
+    Route::get('/vouchers', [VoucherController::class, 'index'])->name('vouchers');
+    Route::get('/vouchers/create', [VoucherController::class, 'create'])->name('vouchers.create');
+    Route::post('/vouchers', [VoucherController::class, 'store'])->name('vouchers.store');
+    Route::get('/vouchers/{transaction}/edit', [VoucherController::class, 'edit'])->name('vouchers.edit');
+    Route::patch('/vouchers/{transaction}/update', [VoucherController::class, 'update'])->name('vouchers.update');
+    Route::delete('/vouchers/{transaction}', [VoucherController::class, 'destroy'])->name('vouchers.destroy');
+    Route::get('/vouchers/{transaction}/show', [VoucherController::class, 'show'])->name('vouchers.show');
+
+    // Transaction
+    Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions');
+    Route::post('/transactions/show', [TransactionController::class, 'show'])->name('transactions.show');
+
+    // Reports
+    Route::get('/reports', [ReportController::class, 'index'])->name('reports');
+    Route::post('/reports/show', [ReportController::class, 'show'])->name('reports.show');
 });
 
 require __DIR__.'/auth.php';
