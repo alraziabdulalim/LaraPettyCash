@@ -23,9 +23,11 @@ class UpdateTransactionRequest extends FormRequest
     {
         return [
             'user_id' => 'required|exists:users,id',
-            'accountname_id' => 'required|integer',
+            'account_name_id' => 'required|exists:account_names,id',
+            'trans_type' => 'required|string',
             'amount' => 'required|integer',
-            'detail' => 'required|string|max:255',
+            'detail' => 'required|text',
+            'voucher_at' => 'required',
         ];
     }
 }

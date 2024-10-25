@@ -7,6 +7,7 @@ use App\Models\AccountName;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Helpers\VoucherHelper;
+use App\Http\Requests\UpdateTransactionRequest;
 
 class VoucherController extends Controller
 {

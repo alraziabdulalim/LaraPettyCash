@@ -14,13 +14,15 @@ class VoucherHelper
             return $balance + ($transaction->trans_type == 'Debit' ? $transaction->amount : -$transaction->amount);
         }, 0);
     }
+    // public function getBalance(): float
+    // {
+    //     return Transaction::sum(fn($transaction) => $transaction->trans_type === 'Debit' ? $transaction->amount : -$transaction->amount);
+    // }
 
     public function handleTransaction($request)
     {
-        $this->validateRequest($request);
-        $formattedData = $this->formatData($request);
-
-        if ($formattedData == false) {
+        $formattedData = $this->validateAndFormatData($request);
+        if (!$formattedData || ($formattedData['trans_type'] === 'Credit' && !$this->hasSufficientBalance($formattedData['amount']))) {
             return false;
         }
 
@@ -29,59 +31,59 @@ class VoucherHelper
 
     public function handleUpdate($request, $transaction)
     {
-        $this->validateRequest($request);
-        $formattedData = $this->formatData($request);
-        return $this->updateTransaction($transaction, $formattedData);
-    }
-
-    protected function validateRequest($request)
-    {
-        $request->validate([
-            'voucher_at' => 'required',
-            'account_name_id' => 'required',
-            'amount' => 'required',
-            'details' => 'required',
-        ]);
-    }
-
-    protected function formatData($request)
-    {
-        $userId = auth()->id();
-        $amount = $request->amount;
-
-        $accountName = AccountName::findOrFail($request->account_name_id);
-        $transType = $accountName->trans_type;
-
-        $voucherAt = Carbon::parse($request->voucher_at . ' ' . date('H:i:s'));
-
-        if ($transType == 'Credit' && $this->balanceChecker($amount) == false) {
+        $formattedData = $this->validateAndFormatData($request);
+        if (!$formattedData || ($formattedData['trans_type'] === 'Credit' && !$this->hasSufficientBalanceForUpdate($formattedData['amount'], $transaction->amount))) {
             return false;
         }
 
+        return $this->updateTransaction($transaction, $formattedData);
+    }
+
+    protected function validateAndFormatData($request): array|bool
+    {
+        $this->validateRequest($request);
+
+        $accountName = AccountName::findOrFail($request->account_name_id);
+        $voucherAt = Carbon::parse($request->voucher_at . ' ' . now()->format('H:i:s'));
+
         return [
-            'user_id' => $userId,
+            'user_id' => auth()->id(),
             'voucher_at' => $voucherAt,
-            'trans_type' => $transType,
+            'trans_type' => $accountName->trans_type,
             'account_name_id' => $request->account_name_id,
-            'amount' => $amount,
+            'amount' => $request->amount,
             'details' => $request->details,
         ];
     }
 
-    protected function balanceChecker($amount)
+    protected function validateRequest($request): void
     {
-        return $amount <= $this->getBalance();
+        $request->validate([
+            'voucher_at' => 'required|date',
+            'account_name_id' => 'required|exists:account_names,id',
+            'amount' => 'required|numeric|min:0',
+            'details' => 'required|string|max:255',
+        ]);
     }
 
-    protected function createTransaction($data)
+    protected function hasSufficientBalance(float $amount): bool
+    {
+        return $this->getBalance() >= $amount;
+    }
+
+    protected function hasSufficientBalanceForUpdate(float $newAmount, float $originalAmount): bool
+    {
+        return $this->getBalance() >= max(0, $newAmount - $originalAmount);
+    }
+
+    protected function createTransaction(array $data)
     {
         return Transaction::create($data);
     }
 
-    protected function updateTransaction($transaction, $data)
+    protected function updateTransaction($transaction, array $data): bool
     {
-        $transaction->fill($data);
-        return $transaction->save();
+        return $transaction->update($data);
     }
 
     public function getParentAccountNames()
