@@ -23,8 +23,15 @@ class VoucherController extends Controller
     public function index()
     {
         $balance = $this->balance;
+        $currentMonthStart = Carbon::now()->startOfMonth()->toDateString();
+        $currentMonthEnd = Carbon::now()->endOfMonth()->toDateString();
         // $transactions = Transaction::with('accountName')->latest()->paginate(10);
-        $transactions = Transaction::with('accountName')->orderBy('id', 'desc')->paginate(10);
+        // $transactions = Transaction::with('accountName')->orderBy('id', 'desc')->paginate(10);
+
+        $transactions = Transaction::with('accountName')
+        ->whereBetween('voucher_at', [$currentMonthStart, $currentMonthEnd])
+        ->orderBy('id', 'desc')
+        ->paginate(10);
 
         return view('vouchers.index', compact('transactions', 'balance'));
     }

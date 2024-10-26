@@ -24,8 +24,16 @@ class ReportController extends Controller
     {
         $balance = $this->balance;
         $accountNames = AccountName::all();
+        $currentMonthStart = Carbon::now()->startOfMonth()->toDateString();
+        $currentMonthEnd = Carbon::now()->endOfMonth()->toDateString();
         // $transactions = Transaction::with('accountName')->latest()->paginate(10);
-        $transactions = Transaction::with('accountName')->orderBy('id', 'desc')->paginate(10);
+        // $transactions = Transaction::with('accountName')->orderBy('id', 'desc')->paginate(10);
+        // $transactions = Transaction::with('accountName')->orderBy('id', 'desc')->get();
+
+        $transactions = Transaction::with('accountName')
+            ->whereBetween('voucher_at', [$currentMonthStart, $currentMonthEnd])
+            ->orderBy('id', 'desc')
+            ->get();
 
         return view('reports.index', compact('balance', 'accountNames', 'transactions'));
     }

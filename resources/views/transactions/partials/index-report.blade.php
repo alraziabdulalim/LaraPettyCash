@@ -10,9 +10,13 @@
                 <th class="border-b border-solid border-0.5 border-white">Details</th>
                 <th class="border-b border-solid border-0.5 border-white">Debit (Tk)</th>
                 <th class="border-b border-solid border-0.5 border-white">Credit (Tk)</th>
+                <th class="border-b border-solid border-0.5 border-white">Balance (Tk)</th>
             </tr>
         </thead>
         <tbody>
+            @php
+                $runningBalance = $balance;
+            @endphp
             @foreach ($transactions as $transaction)
                 <tr>
                     <td class="px-6 py-4 border-b border-solid border-0.5 border-white text-nowrap">
@@ -37,13 +41,20 @@
                     <td class="px-6 py-4 border-b border-solid border-0.5 border-white text-right">
                         {{ $transaction->trans_type == 'Credit' ? $transaction->amount : 0 }}
                     </td>
+                    <td class="px-6 py-4 border-b border-solid border-0.5 border-white text-right">
+                        {{ $runningBalance }}
+                    </td>
                 </tr>
+                @php
+                    $amount = $transaction->amount;
+                    $runningBalance += $transaction->trans_type == 'Debit' ? -$amount : $amount;
+                @endphp
             @endforeach
         </tbody>
     </table>
 </div>
 <!-- Table END -->
 <!-- Pagination -->
-<div class="mt-2 px-2 py-2 bg-slate-800 rounded-lg">
+{{-- <div class="mt-2 px-2 py-2 bg-slate-800 rounded-lg">
     {{ $transactions->links() }}
-</div>
+</div> --}}

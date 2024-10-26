@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Helpers\VoucherHelper;
@@ -21,8 +22,16 @@ class TransactionController extends Controller
     public function index()
     {
         $balance = $this->balance;
+        $currentMonthStart = Carbon::now()->startOfMonth()->toDateString();
+        $currentMonthEnd = Carbon::now()->endOfMonth()->toDateString();
         // $transactions = Transaction::with('accountName')->latest()->paginate(10);
-        $transactions = Transaction::with('accountName')->orderBy('id', 'desc')->paginate(10);
+        // $transactions = Transaction::with('accountName')->orderBy('id', 'desc')->paginate(10);
+        // $transactions = Transaction::with('accountName')->orderBy('id', 'desc')->get();
+
+        $transactions = Transaction::with('accountName')
+        ->whereBetween('voucher_at', [$currentMonthStart, $currentMonthEnd])
+        ->orderBy('id', 'desc')
+        ->get();
 
         return view('transactions.index', compact('balance', 'transactions'));
     }
