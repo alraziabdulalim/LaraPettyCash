@@ -4,9 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VoucherController;
-use App\Http\Controllers\DataTestController;
 use App\Http\Controllers\AccountNameController;
-use App\Http\Controllers\TableUpdateController;
 use App\Http\Controllers\TransactionController;
 
 /*
