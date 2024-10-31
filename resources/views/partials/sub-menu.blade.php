@@ -1,4 +1,4 @@
-<div class="flex items-center justify-end mt-4">
+<div class="flex items-center justify-end mt-1">
     <p class="px-4 py-1.5 bg-green-700 text-white shadow-sm sm:rounded-md  hover:text-white hover:bg-green-400">
         {{ __('Current Balance: ') }} <strong>{{ $balance }}</strong>
     </p>

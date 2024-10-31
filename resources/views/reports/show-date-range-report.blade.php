@@ -3,7 +3,7 @@
         <x-slot name="header">
             <div class="flex justify-between">
                 <h2 class="font-semibold text-xl text-white-800 leading-tight">
-                    {{ __('Report::Current Month') }}
+                    {{ __('Report::Date to Date') }}
                 </h2>
                 @include('partials.sub-menu')
             </div>

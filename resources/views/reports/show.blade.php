@@ -1,16 +1,19 @@
 @auth
     <x-app-layout>
         <x-slot name="header">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Transactions') }}
-            </h2>
-            @include('partials.sub-menu')
+            <div class="flex justify-between">
+                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                    {{ __('Transactions') }}
+                </h2>
+                @include('partials.sub-menu')
+            </div>
         </x-slot>
 
-        <div class="p-10">
-            <div class="max-w-7xl mx-auto px-6 py-2 sm:px-2 lg:px-4">
-                @include('reports.partials.show-form')
-                @include('reports.partials.show-report')
+        <div>
+            <div class="max-w-5xl mx-auto px-6 py-2 sm:px-2 lg:px-4">
+                @include('reports.partials.form-date-range')
+                @include('reports.partials.form-account-date-range')
+                @include('reports.partials.report-date-range-summery')
             </div>
         </div>
     </x-app-layout>

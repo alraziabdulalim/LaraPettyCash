@@ -12,11 +12,11 @@ export default defineConfig({
         }),
     ],
     server: {
-        host: '193.168.0.5',
-        port: 9000,
+        host: '193.168.0.4',
+        port: 9001,
         // hmr: {
-        //     host: '193.168.0.5',
-        //     port: 9000,
+        //     host: '193.168.0.4',
+        //     port: 9001,
         // },
         hmr: false, // Disable HMR to stop automatic reloading
     },

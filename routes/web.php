@@ -44,7 +44,8 @@ Route::middleware('auth')->group(function () {
 
     // Reports
     Route::get('/reports', [ReportController::class, 'index'])->name('reports');
-    Route::post('/reports/show', [ReportController::class, 'show'])->name('reports.show');
+    Route::post('/reports/show-date-range', [ReportController::class, 'showDateRange'])->name('reports.dateRangeReport');
+    Route::post('/reports/show-account-wise', [ReportController::class, 'showAccountWise'])->name('reports.accountWiseReport');
 });
 
 require __DIR__.'/auth.php';

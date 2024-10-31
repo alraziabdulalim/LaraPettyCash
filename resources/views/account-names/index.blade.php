@@ -1,13 +1,15 @@
 @auth
     <x-app-layout>
         <x-slot name="header">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Account Name :: List') }}
-            </h2>
-            @include('partials.sub-menu')
+            <div class="flex justify-between">
+                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                    {{ __('Account Name :: List') }}
+                </h2>
+                @include('partials.sub-menu')
+            </div>
         </x-slot>
 
-        <div class="p-10">
+        <div>
             <div class="max-w-7xl mx-auto px-6 py-2 sm:px-2 lg:px-4">
                 <!-- Table START -->
                 <div class="mt-2 p-5 bg-slate-800 rounded-lg text-white">
@@ -28,12 +30,12 @@
                         <tbody>
                             @foreach ($accountNames as $accountName)
                                 <tr>
-                                    <td class="px-6 py-4 border-b border-solid border-0.5 border-white text-nowrap">
+                                    <td class="px-6 py-4 border-b border-solid border-0.5 border-white text-wrap">
                                         <a href="{{ route('account-names.show', ['account_name' => $accountName->id]) }}">
                                             {{ $accountName->name_bn }}
                                         </a>
                                     </td>
-                                    <td class="px-6 py-4 border-b border-solid border-0.5 border-white text-nowrap">
+                                    <td class="px-6 py-4 border-b border-solid border-0.5 border-white text-wrap">
                                         <a href="{{ route('account-names.show', ['account_name' => $accountName->id]) }}">
                                             {{ $accountName->old_name }}
                                         </a>
@@ -48,7 +50,7 @@
                                             {{ $accountName->old_id }}
                                         </a>
                                     </td>
-                                    <td class="px-6 py-4 border-b border-solid border-0.5 border-white text-nowrap">
+                                    <td class="px-6 py-4 border-b border-solid border-0.5 border-white text-wrap">
                                         <a href="{{ route('account-names.show', ['account_name' => $accountName->id]) }}">
                                             {{ $accountName->name }}
                                         </a>

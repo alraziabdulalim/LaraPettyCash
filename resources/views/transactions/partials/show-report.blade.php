@@ -15,7 +15,7 @@
         </thead>
         <tbody>
             @php
-                $runningBalance = $preBalance;
+                $runningBalance = $openingBalance;
             @endphp
 
             @foreach ($transactions as $transaction)

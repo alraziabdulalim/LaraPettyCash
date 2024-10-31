@@ -6,9 +6,9 @@ mix.js("resources/js/app.js", "public/js").sass(
 );
 
 mix.browserSync({
-    proxy: "193.168.0.5:9000",
-    host: "193.168.0.5",
-    port: 9000,
+    proxy: "193.168.0.4:9001",
+    host: "193.168.0.4",
+    port: 9001,
     open: false,
     notify: false,
     watchOptions: {

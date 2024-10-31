@@ -1,6 +1,6 @@
 <!-- Transaction History Form START -->
-<div class="p-5 bg-slate-800 rounded-lg">
-    <form method="POST" action="{{ route('reports.show') }}">
+<div class="mt-2 p-5 bg-slate-800 rounded-lg flex">
+    <form method="POST" action="{{ route('reports.accountWiseReport') }}">
         @csrf
 
         <div class="flex">
@@ -33,7 +33,7 @@
             <div class="ml-4 mt-1">
                 <button type="submit"
                     class="bg-white text-green-700 rounded-md items-center px-6 py-3 border border-transparent font-semibold text-xs uppercase tracking-widest  hover:text-white hover:bg-green-700 focus:bg-green-700 active:bg-green-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                    {{ __('Show Report') }}
+                    {{ __('Show') }}
                     <button>
             </div>
         </div>

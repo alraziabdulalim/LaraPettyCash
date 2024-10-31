@@ -1,10 +1,12 @@
 @auth
     <x-app-layout>
         <x-slot name="header">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Voucher :: Show') }}
-            </h2>
-            @include('partials.sub-menu')
+            <div class="flex justify-between">
+                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                    {{ __('Voucher :: Show') }}
+                </h2>
+                @include('partials.sub-menu')
+            </div>
         </x-slot>
 
         <div class="p-10">

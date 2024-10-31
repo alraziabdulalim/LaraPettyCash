@@ -14,7 +14,7 @@ class VoucherHelperTwo
         $balance = 0;
 
         foreach ($transactions as $transaction) {
-            $balance += ($transaction->trans_type == 1) ? $transaction->amount : - ($transaction->amount);
+            $balance += ($transaction->trans_type == 'Debit') ? $transaction->amount : - ($transaction->amount);
         }
 
         return $balance;

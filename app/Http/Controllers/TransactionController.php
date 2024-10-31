@@ -51,12 +51,12 @@ class TransactionController extends Controller
         $startDate = $this->transactionHelper->getDateTime('startDate', $startDate);
         $endDate = $this->transactionHelper->getDateTime('endDate',  $endDate);
 
-        $preBalance = $this->transactionHelper->dateWiseBalance($startDate);
+        $openingBalance = $this->transactionHelper->dateWiseBalance($startDate);
         $transactions = $this->transactionHelper->getTransactions($startDate, $endDate);
 
         $request->flash();
 
-        return view('transactions.show', compact('balance', 'transactions', 'preBalance'));
+        return view('transactions.show', compact('balance', 'transactions', 'openingBalance'));
         // return view('transactions.show', array_merge(['balance' => $balance], $data));
     }
 }

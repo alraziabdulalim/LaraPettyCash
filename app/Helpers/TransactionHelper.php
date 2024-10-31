@@ -36,7 +36,7 @@ class TransactionHelper
     public function dateWiseBalance($startDate)
     {
         $transactions = Transaction::select('amount', 'trans_type')
-            ->where('created_at', '<', $startDate)
+            ->where('voucher_at', '<', $startDate)
             ->oldest()
             ->get();
 
@@ -45,8 +45,8 @@ class TransactionHelper
 
     public function getTransactions($startDate, $endDate)
     {
-        $transactions = Transaction::whereBetween('created_at', [$startDate, $endDate])
-            ->oldest()
+        $transactions = Transaction::whereBetween('voucher_at', [$startDate, $endDate])
+            ->oldest('id')
             ->get();
 
         return $transactions;

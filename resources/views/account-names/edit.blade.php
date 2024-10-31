@@ -1,13 +1,15 @@
 @auth
     <x-app-layout>
         <x-slot name="header">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Account Name :: Edit Form') }}
-            </h2>
-            @include('partials.sub-menu')
+            <div class="flex justify-between">
+                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                    {{ __('Account Name :: Edit Form') }}
+                </h2>
+                @include('partials.sub-menu')
+            </div>
         </x-slot>
 
-        <div class="p-10">
+        <div>
             <div class="max-w-2xl mx-auto px-6 py-2 sm:px-2 lg:px-4">
                 <!-- Transaction Form START -->
                 <div class="p-5 bg-slate-800 rounded-lg">
@@ -62,13 +64,21 @@
                         <!-- Accounts Group -->
                         <div class="mt-3">
                             <x-input-label for="account_group" :value="__('Accounts Group')" class="text-white whitespace-nowrap" />
-                            <select id="account_group" name="account_group" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
-                                <option value="Income" {{ $accountName->account_group == 'Income' ? 'selected' : '' }}>Income</option>
-                                <option value="Cost" {{ $accountName->account_group == 'Cost' ? 'selected' : '' }}>Cost</option>
-                                <option value="Expenditure" {{ $accountName->account_group == 'Expenditure' ? 'selected' : '' }}>Expenditure</option>
-                                <option value="Loan" {{ $accountName->account_group == 'Loan' ? 'selected' : '' }}>Loan</option>
-                                <option value="Cash_In" {{ $accountName->account_group == 'Cash_In' ? 'selected' : '' }}>Cash In</option>
-                                <option value="Cash_Out" {{ $accountName->account_group == 'Cash_Out' ? 'selected' : '' }}>Cash Out</option>
+                            <select id="account_group" name="account_group"
+                                class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
+                                <option value="Income" {{ $accountName->account_group == 'Income' ? 'selected' : '' }}>
+                                    Income</option>
+                                <option value="Cost" {{ $accountName->account_group == 'Cost' ? 'selected' : '' }}>Cost
+                                </option>
+                                <option value="Expenditure"
+                                    {{ $accountName->account_group == 'Expenditure' ? 'selected' : '' }}>Expenditure
+                                </option>
+                                <option value="Loan" {{ $accountName->account_group == 'Loan' ? 'selected' : '' }}>Loan
+                                </option>
+                                <option value="Cash_In" {{ $accountName->account_group == 'Cash_In' ? 'selected' : '' }}>
+                                    Cash In</option>
+                                <option value="Cash_Out" {{ $accountName->account_group == 'Cash_Out' ? 'selected' : '' }}>
+                                    Cash Out</option>
                             </select>
                             <x-input-error :messages="$errors->get('account_group')" class="mt-2" />
                         </div>

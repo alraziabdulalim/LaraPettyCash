@@ -2,8 +2,8 @@
     <x-app-layout>
         <x-slot name="header">
             <div class="flex justify-between">
-                <h2 class="font-semibold text-xl text-white-800 leading-tight">
-                    {{ __('Report::Current Month') }}
+                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                    {{ __('Report::Account Date Range') }}
                 </h2>
                 @include('partials.sub-menu')
             </div>
@@ -13,8 +13,14 @@
             <div class="max-w-5xl mx-auto px-6 py-2 sm:px-2 lg:px-4">
                 @include('reports.partials.form-date-range')
                 @include('reports.partials.form-account-date-range')
-                @include('reports.partials.report-date-range-summery')
+                @include('reports.partials.report-account-summery')
             </div>
         </div>
     </x-app-layout>
+
+    <script>
+        flatpickr(".voucher_at", {
+            dateFormat: "d-m-Y"
+        });
+    </script>
 @endauth
