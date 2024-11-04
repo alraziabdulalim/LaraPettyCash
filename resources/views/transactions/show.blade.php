@@ -11,8 +11,8 @@
 
         <div>
             <div class="max-w-7xl mx-auto px-6 py-2 sm:px-2 lg:px-4">
-                @include('transactions.partials.show-form')
-                @include('transactions.partials.show-report')
+                @include('transactions.partials.form-date-range')
+                @include('transactions.partials.transactions-date-range')
             </div>
         </div>
     </x-app-layout>

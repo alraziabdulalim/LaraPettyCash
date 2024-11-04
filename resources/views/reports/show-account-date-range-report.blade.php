@@ -13,7 +13,7 @@
             <div class="max-w-5xl mx-auto px-6 py-2 sm:px-2 lg:px-4">
                 @include('reports.partials.form-date-range')
                 @include('reports.partials.form-account-date-range')
-                @include('reports.partials.report-account-summery')
+                @include('reports.partials.account-summery')
             </div>
         </div>
     </x-app-layout>

@@ -12,7 +12,7 @@
 
         <div>
             <div class="max-w-2xl mx-auto px-6 py-2 sm:px-2 lg:px-4">
-                @include('vouchers.partials.voucher-form')
+                @include('vouchers.partials.form-voucher')
             </div>
         </div>
     </x-app-layout>

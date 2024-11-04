@@ -13,7 +13,7 @@
                 <!-- Navigation Links -->
                 @auth
                     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                        <x-nav-link :href="route('vouchers.index')" :active="request()->routeIs('vouchers.index')">
+                        <x-nav-link :href="route('vouchers')" :active="request()->routeIs('vouchers')">
                             {{ __('Voucher') }}
                         </x-nav-link>
                         <x-nav-link :href="route('transactions')" :active="request()->routeIs('transactions')">

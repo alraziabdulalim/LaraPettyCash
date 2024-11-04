@@ -27,7 +27,7 @@
                     </td>
                     <td class="px-6 py-4 border-b border-solid border-0.5 border-white">
                         <a
-                            href="{{ route('vouchers.show', ['transaction' => $transaction->id]) }}">{{ $transaction->id }}</a>
+                            href="{{ route('vouchers.show', ['voucher' => $transaction->id]) }}">{{ $transaction->id }}</a>
                     </td>
                     <td class="px-6 py-4 border-b border-solid border-0.5 border-white">
                         {{ $transaction->accountName->name_bn }}

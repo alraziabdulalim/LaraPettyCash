@@ -73,9 +73,8 @@ class ReportController extends Controller
 
         $startDate = $this->transactionHelper->getDateTime('startDate', $request->startDate);
         $endDate = $this->transactionHelper->getDateTime('endDate', $request->endDate);
-        $accountNameId = $request->account_name_id;
 
-        $transactions = Transaction::where('account_name_id', $accountNameId)
+        $transactions = Transaction::where('account_name_id', $request->account_name_id)
             ->whereBetween('voucher_at', [$startDate, $endDate])
             ->oldest()
             ->get();

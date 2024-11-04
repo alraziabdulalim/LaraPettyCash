@@ -1,13 +1,13 @@
 <!-- Transaction Form START -->
 <div class="p-5 bg-slate-800 rounded-lg">
-    <form method="POST" action="{{ route('vouchers.update', $transaction->id) }}">
+    <form method="POST" action="{{ route('vouchers.update', $voucher->id) }}">
         @csrf
         @method('PATCH')
 
         <!-- Transaction Date -->
         <div class="mt-3">
             <x-input-label for="voucher_at" :value="__('Transaction Date')" class="text-white whitespace-nowrap" />
-            <x-text-input id="voucher_at" class="block mt-1 w-full" type="text" name="voucher_at" :value="$transaction->voucher_at"
+            <x-text-input id="voucher_at" class="block mt-1 w-full" type="text" name="voucher_at" :value="$voucher->voucher_at"
                 required autofocus autocomplete="voucher_at" />
             <x-input-error :messages="$errors->get('voucher_at')" class="mt-2" />
         </div>
@@ -17,9 +17,9 @@
             <x-input-label for="trans_type" :value="__('Trans Type')" class="text-white whitespace-nowrap" />
             <select id="trans_type" name="trans_type"
                 class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
-                <option value="Debit" {{ $transaction->trans_type == 'Debit' ? 'selected' : '' }}>Debit
+                <option value="Debit" {{ $voucher->trans_type == 'Debit' ? 'selected' : '' }}>Debit
                 </option>
-                <option value="Credit" {{ $transaction->trans_type == 'Credit' ? 'selected' : '' }}>Credit
+                <option value="Credit" {{ $voucher->trans_type == 'Credit' ? 'selected' : '' }}>Credit
                 </option>
             </select>
             <x-input-error :messages="$errors->get('trans_type')" class="mt-2" />
@@ -32,7 +32,7 @@
                 class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
                 @foreach ($parentNames as $parentName)
                     <option value="{{ $parentName->id }}"
-                        {{ $transaction->parent_id == $parentName->id ? 'selected' : '' }}>
+                        {{ $voucher->parent_id == $parentName->id ? 'selected' : '' }}>
                         {{ $parentName->id . ' : ' . $parentName->name_bn }}</option>
                 @endforeach
             </select>
@@ -46,7 +46,7 @@
                 class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
                 @foreach ($accountNames as $accountName)
                     <option value="{{ $accountName->id }}"
-                        {{ $transaction->account_name_id == $accountName->id ? 'selected' : '' }}>
+                        {{ $voucher->account_name_id == $accountName->id ? 'selected' : '' }}>
                         {{ $accountName->id . ' : ' . $accountName->name_bn }}</option>
                 @endforeach
             </select>
@@ -56,7 +56,7 @@
         <!-- Transaction Amount -->
         <div class="mt-3">
             <x-input-label for="amount" :value="__('Amount')" class="text-white whitespace-nowrap" />
-            <x-text-input id="amount" class="block mt-1 w-full" type="number" name="amount" :value="$transaction->amount"
+            <x-text-input id="amount" class="block mt-1 w-full" type="number" name="amount" :value="$voucher->amount"
                 required autofocus autocomplete="amount" step="0.01" />
             <x-input-error :messages="$errors->get('amount')" class="mt-2" />
         </div>
@@ -66,7 +66,7 @@
             <x-input-label for="details" :value="__('Detail')" class="text-white whitespace-nowrap" />
             <textarea id="details" name="details"
                 class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
-                required autofocus autocomplete="details">{{ $transaction->details }}</textarea>
+                required autofocus autocomplete="details">{{ $voucher->details }}</textarea>
             <x-input-error :messages="$errors->get('details')" class="mt-2" />
         </div>
 

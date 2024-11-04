@@ -16,54 +16,54 @@
                     <table class="w-full min-w-min bg-center border-collapse border-b border-white">
                         <tr class="border-b border-solid border-0.5 border-white">
                             <th class="text-xl uppercase border-b border-solid border-0.5 border-white" colspan="2">Voucher
-                                Detail of {{ $transaction->id }}</th>
+                                Detail of {{ $voucher->id }}</th>
                         </tr>
                         <tr class="border-b border-solid border-0.5 border-white">
                             <th class="text-xs uppercase border-b border-solid border-0.5 border-white">A/C Name</th>
                             <td class="px-6 py-4 border-b border-solid border-0.5 border-white">
-                                {{ $transaction->accountName->name_bn }}
+                                {{ $voucher->accountName->name_bn }}
                             </td>
                         </tr>
                         <tr class="border-b border-solid border-0.5 border-white">
                             <th class="text-xs uppercase border-b border-solid border-0.5 border-white">Parent Account</th>
                             <td class="px-6 py-4 border-b border-solid border-0.5 border-white">
-                                {{ is_null($transaction->accountName->topAccount) ? 'Top Parent' : $transaction->accountName->topAccount->name_bn }}
+                                {{ is_null($voucher->accountName->topAccount) ? 'Top Parent' : $voucher->accountName->topAccount->name_bn }}
                             </td>
                         </tr>
                         <tr class="border-b border-solid border-0.5 border-white">
                             <th class="text-xs uppercase border-b border-solid border-0.5 border-white">A/C Type</th>
                             <td class="px-6 py-4 border-b border-solid border-0.5 border-white">
-                                {{ $transaction->accountName->trans_type }}
+                                {{ $voucher->trans_type }}
                             </td>
                         </tr>
                         <tr class="border-b border-solid border-0.5 border-white">
                             <th class="text-xs uppercase border-b border-solid border-0.5 border-white">Post Date</th>
                             <td class="px-6 py-4 border-b border-solid border-0.5 border-white">
-                                {{ $transaction->created_at->format('d-m-Y') }}
+                                {{ $voucher->created_at->format('d-m-Y') }}
                             </td>
                         </tr>
                         <tr class="border-b border-solid border-0.5 border-white">
                             <th class="text-xs uppercase border-b border-solid border-0.5 border-white">Vou. Date</th>
                             <td class="px-6 py-4 border-b border-solid border-0.5 border-white">
-                                {{ \Carbon\Carbon::parse($transaction->voucher_at)->format('d-m-Y') }}
+                                {{ \Carbon\Carbon::parse($voucher->voucher_at)->format('d-m-Y') }}
                             </td>
                         </tr>
                         <tr class="border-b border-solid border-0.5 border-white">
                             <th class="text-xs uppercase border-b border-solid border-0.5 border-white">Details</th>
                             <td class="px-6 py-4 border-b border-solid border-0.5 border-white">
-                                {{ $transaction->details }}
+                                {{ $voucher->details }}
                             </td>
                         </tr>
                         <tr class="border-b border-solid border-0.5 border-white">
                             <th class="text-xs uppercase border-b border-solid border-0.5 border-white">Amount (Tk)</th>
                             <td class="px-6 py-4 border-b border-solid border-0.5 border-white">
-                                {{ $transaction->amount }}
+                                {{ $voucher->amount }}
                             </td>
                         </tr>
                         <tr class="border-b border-solid border-0.5 border-white">
                             <th class="text-xs uppercase border-b border-solid border-0.5 border-white">Update need</th>
                             <td class="px-6 py-4 border-b border-solid border-0.5 border-white">
-                                <a href="{{ route('vouchers.edit', ['transaction' => $transaction->id]) }}">Yes</a>
+                                <a href="{{ route('vouchers.edit', ['voucher' => $voucher->id]) }}">Yes</a>
                             </td>
                         </tr>
                     </table>
